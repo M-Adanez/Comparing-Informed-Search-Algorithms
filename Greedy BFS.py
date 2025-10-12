@@ -1,12 +1,11 @@
 from grid import grid
 import heapq
 
-
-def greedy_best_first_search(grid_instance, init, objective):
+def greedy_best_first_search(grid, init, objective):
     came_from = {init: None}
     frontier = []
 
-    start_h = grid_instance.heuristic(init, objective)
+    start_h = grid.heuristic(init, objective)
     heapq.heappush(frontier, (start_h, init))
 
     while frontier:
@@ -14,9 +13,9 @@ def greedy_best_first_search(grid_instance, init, objective):
 
         if current_node == objective:
             return reconstruct_path(came_from, init, objective)
-        for neighbor in grid_instance.get_neighbors(current_node):
+        for neighbor in grid.get_neighbors(current_node):
             if neighbor not in came_from:
-                priority = grid_instance.heuristic(neighbor, objective)
+                priority = grid.heuristic(neighbor, objective)
                 heapq.heappush(frontier, (priority, neighbor))
                 came_from[neighbor] = current_node
 
@@ -34,3 +33,4 @@ def reconstruct_path(came_from, start, goal):
     path.append(start)
     path.reverse() 
     return path
+

@@ -1,20 +1,29 @@
 from grid import grid
 import heapq
-print(grid)
 
-def greedy_best_first_search(grid):
-    cola_prioridad = []
-    costo_inicial = 0
-    fila_inicial = 0
-    columna_inicial = 0
-    frontier=heapq.heappush(cola_prioridad, (costo_inicial, fila_inicial, columna_inicial))
+def greedy_best_first_search(grid, init, objective):
+    start=init
+    goal = objective
+    frontier = []
+    cost=0
+    heapq.heappush(frontier, (cost, start))
+    explored = set()
     
     while(frontier):
-        if(fila_inicial==5 and columna_inicial==5):
-            return "Solution found"
-        elif(fila_inicial==0 and columna_inicial==0):
-            
-        
+        current = heapq.heappop(frontier)[1]
+        if current == goal:
+            return True
+        explored.add(current)
+        for neighbor in grid.get_neighbors(current):
+            if neighbor not in explored:
+                priority = grid.heuristic(neighbor, goal)
+                cost+=1
+                heapq.heappush(frontier, (priority, neighbor))
 
-            pass
+                
+    return False
+    
 
+def get_neighbors():
+    
+    pass
